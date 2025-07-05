@@ -13,6 +13,7 @@ import {
 import { NavbarSimple } from "../../components/navbar/Navbar";
 import { Card } from "@material-tailwind/react";
 import { Avatar } from "@material-tailwind/react";
+import FooterSection from "../../components/footerSection/footerSection";
 
 const TABLE_HEAD = [
   "profile",
@@ -286,8 +287,8 @@ const DashboardContact = () => {
   return (
     <>
       <NavbarSimple />
-      <div className="lg:w-[80%] mx-auto">
-        <div className=" flex justify-between items-center mt-6 p-4">
+      <div className="lg:w-[80%] mx-auto mb-12 py-6">
+        <div className=" flex justify-between items-center mt-6 ">
           <div>
             <h1 className="lg:text-[1.6rem] sm:text-base font-bold">
               Your Contacts
@@ -659,6 +660,7 @@ const DashboardContact = () => {
           </Card>
         </div>
       </div>
+      <FooterSection/>
     </>
   );
 };

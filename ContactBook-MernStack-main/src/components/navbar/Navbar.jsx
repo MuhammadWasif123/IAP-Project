@@ -25,12 +25,30 @@ function NavList() {
         </NavLink>
       </Typography>
 
+        <Typography as="li" variant="small" color="blue-gray" className="p-1 ">
+        <NavLink
+          to="/team-member"
+          className="flex items-center text-lg hover:text-[#8E24AA] text-neutral-300 tracking-tight transition-colors"
+           >
+          Team Member
+        </NavLink>
+      </Typography>
+
+       <Typography as="li" variant="small" color="blue-gray" className="p-1 ">
+        <NavLink
+          to="/contact-us"
+          className="flex items-center text-lg hover:text-[#8E24AA] text-neutral-300 tracking-tight transition-colors"
+           >
+          Contact Us
+        </NavLink>
+      </Typography>
+
       <Typography as="li" variant="small" color="blue-gray" className="p-1 ">
         <Link
           to="/dashboard"
-          className="flex items-center text-lg hover:text-purple-600 text-neutral-300 tracking-tight transition-colors"
+          className="flex items-center text-lg hover:text-[#8E24AA] text-neutral-300 tracking-tight transition-colors"
         >
-          Contact
+          Contact List
         </Link>
       </Typography>
       {
@@ -43,7 +61,7 @@ function NavList() {
         >
            <Link
             to="/"
-            className="flex items-center bg-purple-600 hover:bg-white hover:border-purple-500 hover:text-black
+            className="flex items-center bg-[#8E24AA] hover:bg-white hover:border-[#8E24AA] hover:text-black
             transition-colors text-lg border-2  border-purple-500 text-white  py-1 px-3 rounded-md ">
             Logout
           </Link>
@@ -55,8 +73,8 @@ function NavList() {
       >
          <Link
           to="/login"
-          className="flex items-center bg-purple-600 hover:bg-white hover:border-purple-500 hover:text-black
-          transition-colors text-lg border-2  border-purple-500 text-white  py-1 px-3 rounded-md ">
+          className="flex items-center bg-[#8E24AA] hover:bg-white hover:border-purple-500 hover:text-black
+          transition-colors text-lg border-2  border-[#8E24AA] text-white  py-1 px-3 rounded-md ">
           Login
         </Link>
       </Typography>)
@@ -85,7 +103,8 @@ export function NavbarSimple() {
     <Navbar className="mx-auto max-w-screen-xl px-6 py-3 mt-2 shadow-sm ">
       <div className="flex items-center justify-between ">
         <Typography className="mr-4 cursor-pointer py-1.5 text-2xl font-medium text-black">
-          Contact <span className="text-purple-700 tracking-tight">Book</span>
+          Contact <span className="text-[#8E24AA] tracking-tight">Book</span>
+
         </Typography>
         <div className="hidden lg:block">
           <NavList />

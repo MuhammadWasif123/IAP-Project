@@ -7,6 +7,9 @@ import Home from "./pages/Home/Home.jsx"
 import PageNotfound from './pages/Notfound/PageNotfound.jsx'
 import Protectedroutes from '../routes/Protectedroutes.jsx'
 import AuthenticateRoute from '../routes/AuthenticateRoute.jsx'
+import TeamMember from './pages/TeamMember/TeamMember.jsx'
+import ContactUs from './pages/ContactUs/ContactUs.jsx'
+
 function App() {
   return (
     <>
@@ -14,6 +17,8 @@ function App() {
 
       <Route path='/' element={<Home/>} />
       <Route path='*' element={<PageNotfound/>}/>
+      <Route path='/team-member' element={<TeamMember/>}/>
+       <Route path='/contact-us' element={<ContactUs/>}/>
 
       <Route element={<AuthenticateRoute/>} >
         <Route path='/login' element={<Login/>}/>
