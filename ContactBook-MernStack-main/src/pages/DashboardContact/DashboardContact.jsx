@@ -72,7 +72,7 @@ const DashboardContact = () => {
     setSerchLoading(true);
     const token = localStorage.getItem("token")
     try {
-      const response = await axios.get(`https://contact-book-backend-97yv.vercel.app/api/search-posts?search=${searchQuery}`,
+      const response = await axios.get(`http://localhost:8000/api/search-posts?search=${searchQuery}`,
         {
           headers: {
             authorization: `Bearer ${token}`,
@@ -151,7 +151,7 @@ const DashboardContact = () => {
       console.log(objTOSend);
       // console.log(updateId);
       const res = await axios.put(
-        `https://contact-book-backend-97yv.vercel.app/api/updatepost/${updateId}`,
+        `http://localhost:8000/api/updatepost/${updateId}`,
         objTOSend
       );
       console.log(res.data);
@@ -174,7 +174,7 @@ const DashboardContact = () => {
     }
     try {
       const res = await axios.get(
-        "https://contact-book-backend-97yv.vercel.app/api/dashboardvalidate",
+        "http://localhost:8000/api/dashboardvalidate",
         {
           headers: {
             authorization: `Bearer ${token}`,
@@ -209,7 +209,7 @@ const DashboardContact = () => {
     try {
       setLoading(true);
       const res = await axios.post(
-        "https://contact-book-backend-97yv.vercel.app/api/post",
+        "http://localhost:8000/api/post",
         formData,
         {
           headers: {
@@ -239,7 +239,7 @@ const DashboardContact = () => {
     }
     try {
       const res = await axios.get(
-        "https://contact-book-backend-97yv.vercel.app/api/allpost",
+        "http://localhost:8000/api/allpost",
         {
           headers: {
             authorization: `Bearer ${token}`,
@@ -267,7 +267,7 @@ const DashboardContact = () => {
     }
     try {
       const res = await axios.delete(
-        `https://contact-book-backend-97yv.vercel.app/api/delpost/${id}`,
+        `http://localhost:8000/api/delpost/${id}`,
         {
           headers: {
             authorization: `Bearer ${token}`,

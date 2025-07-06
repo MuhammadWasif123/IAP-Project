@@ -36,7 +36,7 @@ const adminSignUp = async (req, res) => {
   }
   const admin = await Admin.findById(CreatedAdmin._id).select("-password");
 
-  return res.status(402).json({
+  return res.status(201).json({
     message: "Admin Registered",
     data: admin,
   });

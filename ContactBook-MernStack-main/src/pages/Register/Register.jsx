@@ -50,7 +50,7 @@ const Register = () => {
         //   objToSend
         // );
         const res = await axios.post(
-          "https://contact-book-backend-97yv.vercel.app/api/signup",
+          "http://localhost:8000/api/signup",
           objToSend
         );
       

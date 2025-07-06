@@ -80,7 +80,7 @@ const LoginController = async (req, res) => {
     let token = jwt.sign({ email: userExist.email }, process.env.SEC_KEY);
     const options = {
       httpOnly: true,
-      secure: true,
+      secure: false,
     };
     return res.status(200).cookie("token", token, options).json({
       status: 200,
@@ -101,7 +101,7 @@ const LoginController = async (req, res) => {
 const logoutUser = async (_,res) => {
   const options = {
       httpOnly: true,
-      secure: true,
+      secure: false,
     };
   return res.status(200).clearCookie("token",options).json({
     status:200,

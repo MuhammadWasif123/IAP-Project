@@ -15,6 +15,8 @@ function NavList() {
     window.location.reload()
   }
   return (
+    <>
+    
     <ul className="my-2 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6 ">
       <Typography as="li" variant="small" color="blue-gray" className="p-1 ">
         <NavLink
@@ -82,6 +84,7 @@ function NavList() {
 
      
     </ul>
+    </>
   );
 }
 

@@ -1,45 +1,50 @@
 import React, { useState } from "react";
-import {  Input } from "@material-tailwind/react";
+import { Input } from "@material-tailwind/react";
 import { Button } from "@material-tailwind/react";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { NavbarSimple } from "../../components/navbar/Navbar";
+import FooterSection from "../../components/footerSection/footerSection";
 
 const Login = () => {
-  const [email,setEmail] = useState();
-  const [password,setPassword] = useState();
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
 
-  const [isText,setText] = useState(false)
-  const handleText = ()=> setText(!isText)
+  const [isText, setText] = useState(false);
+  const handleText = () => setText(!isText);
 
-  const[loading,setLoading]=useState(false)
-  const history = useNavigate()
+  const [loading, setLoading] = useState(false);
+  const history = useNavigate();
 
-  const handleSubmit = async (event)=>{
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const objTosend = {
       email,
-      password
-    }
-    setLoading(true)
-    try{
-      // const res = await axios.post("http://localhost:8000/api/login",objTosend);
-      const res = await axios.post("https://contact-book-backend-97yv.vercel.app/api/login",objTosend);
+      password,
+    };
+    setLoading(true);
+    try {
+      const res = await axios.post(
+        "http://localhost:8000/api/login",
+        objTosend,
+        {withCredentials:true}
+      );
 
       console.log(res.data);
-      localStorage.setItem("token",res.data.token);
-      history("/dashboard")
-      setLoading(false)
-    }catch(err){
+      localStorage.setItem("token", res.data.token);
+      history("/dashboard");
+      setLoading(false);
+    } catch (err) {
       alert(err);
-      setLoading(false)
+      setLoading(false);
     }
-    }
+  };
   return (
-    <> 
+    <>
+    <NavbarSimple/>
       <div className="outer-box flex items-center justify-center gap-10 w-full h-screen">
-        <div
-          className="inner-box border border-purple-400 rounded-lg  w-[400px] h-auto bg-gradient-to-tl from-opacity-100 to-opacity-50 via-opacity-100 backdrop-blur-9 shadow-lg z-2">
+        <div className="inner-box border border-purple-400 rounded-lg  w-[400px] h-auto bg-gradient-to-tl from-opacity-100 to-opacity-50 via-opacity-100 backdrop-blur-9 shadow-lg z-2">
           <div className="header-login">
             <h1 className="sm:text-2xl lg:text-4xl lg:font-bold text-center py-4 text-purple-500">
               Login
@@ -53,7 +58,7 @@ const Login = () => {
                   label="Email"
                   placeholder="Enter Your Email"
                   size="lg"
-                  onChange={(e)=> setEmail(e.target.value)}
+                  onChange={(e) => setEmail(e.target.value)}
                 />
               </div>
               <div className="my-5 relative">
@@ -62,31 +67,61 @@ const Login = () => {
                   label="Password"
                   placeholder="Enter Your Password"
                   size="lg"
-                  type={(isText ? "text" : "password")}
-                  onChange={(e)=> setPassword(e.target.value)}
+                  type={isText ? "text" : "password"}
+                  onChange={(e) => setPassword(e.target.value)}
                 />
-                <p onClick={handleText} className="absolute right-0 top-1/2 transform -translate-y-1/2 mr-1.5 border bg-purple-400 rounded-md py-1.5 px-1.5 text-[0.8rem] text-white w-12">
-                  {isText?"text":"show"}
+                <p
+                  onClick={handleText}
+                  className="absolute right-0 top-1/2 transform -translate-y-1/2 mr-1.5 border bg-purple-400 rounded-md py-1.5 px-1.5 text-[0.8rem] text-white w-12"
+                >
+                  {isText ? "text" : "show"}
                 </p>
               </div>
 
               <div>
                 <p className="px-2  lg:text-[1rem]">
-                  Not have an Account? <Link className="font-bold text-purple-600"  to="/register">Signup</Link>
+                  Not have an Account?{" "}
+                  <Link className="font-bold text-purple-600" to="/register">
+                    Signup
+                  </Link>
                 </p>
               </div>
-             
+
               <div className="my-5">
-                {
-                  loading?<Button  className="w-full border bg-purple-400 text-center" loading={true}>Loading</Button>:<button  className="w-full border bg-purple-400 py-2 md:rounded text-white" color="purple" variant="gradient">
-                  Login
-                </button>
-                }
+                {loading ? (
+                  <Button
+                    className="w-full border bg-purple-400 text-center"
+                    loading={true}
+                  >
+                    Loading
+                  </Button>
+                ) : (
+                  <button
+                    className="w-full border bg-purple-400 py-2 md:rounded text-white"
+                    color="purple"
+                    variant="gradient"
+                  >
+                    Login
+                  </button>
+                )}
+              </div>
+              <div className="text-center mb-4">
+                <p className="text-sm text-gray-600">Are you an Admin?</p>
+                <Link to="/admin-login">
+                  <Button
+                    color="purple"
+                    variant="outlined"
+                    className="mt-2 w-full"
+                  >
+                    Login as Admin
+                  </Button>
+                </Link>
               </div>
             </form>
           </div>
         </div>
       </div>
+      <FooterSection/>
     </>
   );
 };
