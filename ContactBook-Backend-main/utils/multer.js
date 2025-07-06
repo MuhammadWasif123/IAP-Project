@@ -14,7 +14,7 @@
 
 // export default upload;
 
-import multer from 'multer';
+import multer from "multer";
 
 // Use memory storage to keep files in memory (not saving them locally)
 const storage = multer.memoryStorage();
