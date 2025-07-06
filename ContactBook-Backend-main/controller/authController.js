@@ -1,7 +1,6 @@
 import UserModel from "../model/userSchema.js";
-import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-       
+import bcrypt from "bcrypt";
 
 const SignupController = async (req, res) => {
   const { fname, email, password, cpassword } = req.body;
@@ -49,13 +48,14 @@ const SignupController = async (req, res) => {
       status: false,
       message: "Internal Server Error",
       data: null,
+      error: error,
     });
   }
 };
 
 const LoginController = async (req, res) => {
   try {
-  const { email, password } = req.body;
+    const { email, password } = req.body;
 
     const userExist = await UserModel.findOne({ email });
     // console.log("userExist",userExist);
@@ -77,8 +77,12 @@ const LoginController = async (req, res) => {
     }
     // create token
     console.log(process.env.SEC_KEY);
-    let token = jwt.sign({ email: userExist.email },process.env.SEC_KEY);
-    return res.status(200).json({
+    let token = jwt.sign({ email: userExist.email }, process.env.SEC_KEY);
+    const options = {
+      httpOnly: true,
+      secure: true,
+    };
+    return res.status(200).cookie("token", token, options).json({
       status: 200,
       message: "User logged in successfully",
       data: userExist,
@@ -93,4 +97,15 @@ const LoginController = async (req, res) => {
     });
   }
 };
-export { SignupController, LoginController };
+
+const logoutUser = async (_,res) => {
+  const options = {
+      httpOnly: true,
+      secure: true,
+    };
+  return res.status(200).clearCookie("token",options).json({
+    status:200,
+    message:"User Logout SuccessFully"
+  })
+};
+export { SignupController, LoginController,logoutUser };
