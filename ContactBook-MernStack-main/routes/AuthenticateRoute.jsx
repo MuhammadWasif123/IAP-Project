@@ -1,7 +1,11 @@
-import React from 'react'
-import { Navigate, Outlet } from 'react-router-dom';
+import Cookies from "js-cookie";
+import { Navigate, Outlet } from "react-router-dom";
 
 const AuthenticateRoute = () => {
-  return !localStorage.getItem("token") ? <Outlet/> : (<Navigate to={"/dashboard"} /> );
-}
+  return !Cookies.get("userToken") ? (
+    <Outlet />
+  ) : (
+    <Navigate to={"/dashboard"} />
+  );
+};
 export default AuthenticateRoute;

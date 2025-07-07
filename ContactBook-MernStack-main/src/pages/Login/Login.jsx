@@ -28,11 +28,10 @@ const Login = () => {
       const res = await axios.post(
         "http://localhost:8000/api/login",
         objTosend,
-        {withCredentials:true}
+        { withCredentials: true }
       );
 
       console.log(res.data);
-      localStorage.setItem("token", res.data.token);
       history("/dashboard");
       setLoading(false);
     } catch (err) {
@@ -42,7 +41,7 @@ const Login = () => {
   };
   return (
     <>
-    <NavbarSimple/>
+      <NavbarSimple />
       <div className="outer-box flex items-center justify-center gap-10 w-full h-screen">
         <div className="inner-box border border-purple-400 rounded-lg  w-[400px] h-auto bg-gradient-to-tl from-opacity-100 to-opacity-50 via-opacity-100 backdrop-blur-9 shadow-lg z-2">
           <div className="header-login">
@@ -121,7 +120,7 @@ const Login = () => {
           </div>
         </div>
       </div>
-      <FooterSection/>
+      <FooterSection />
     </>
   );
 };

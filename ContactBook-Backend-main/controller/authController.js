@@ -76,17 +76,17 @@ const LoginController = async (req, res) => {
       });
     }
     // create token
-    console.log(process.env.SEC_KEY);
-    let token = jwt.sign({ email: userExist.email }, process.env.SEC_KEY);
+    console.log(process.env.USER_SEC_KEY);
+    let userToken = jwt.sign({ email: userExist.email }, process.env.SEC_KEY);
     const options = {
-      httpOnly: true,
+      httpOnly: false,
       secure: false,
     };
-    return res.status(200).cookie("token", token, options).json({
+    return res.status(200).cookie("userToken", userToken, options).json({
       status: 200,
       message: "User logged in successfully",
       data: userExist,
-      token: token,
+      userToken: userToken,
     });
   } catch (error) {
     console.log(error);
@@ -98,14 +98,14 @@ const LoginController = async (req, res) => {
   }
 };
 
-const logoutUser = async (_,res) => {
+const logoutUser = async (_, res) => {
   const options = {
-      httpOnly: true,
-      secure: false,
-    };
-  return res.status(200).clearCookie("token",options).json({
-    status:200,
-    message:"User Logout SuccessFully"
-  })
+    httpOnly: false,
+    secure: false,
+  };
+  return res.status(200).clearCookie("userToken", options).json({
+    status: 200,
+    message: "User Logout SuccessFully",
+  });
 };
-export { SignupController, LoginController,logoutUser };
+export { SignupController, LoginController, logoutUser };

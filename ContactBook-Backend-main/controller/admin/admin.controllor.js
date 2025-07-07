@@ -1,6 +1,8 @@
 import { Admin } from "../../model/adminSchema.js";
 import CrudModel from "../../model/crudSchema.js";
 import UserModel from "../../model/userSchema.js";
+import jwt from "jsonwebtoken";
+
 const adminSignUp = async (req, res) => {
   const { name, email, password, confirmPassword } = req.body;
   console.log(req.body);
@@ -67,17 +69,19 @@ const loginAdmin = async (req, res) => {
     });
   }
 
-  const token = await admin.generateToken();
-  if (!token) {
+  const adminToken = await admin.generateToken();
+  if (!adminToken) {
     return res.status(500).json({
       message: "Internal Server Error",
     });
   }
   const options = {
-    httpOnly: true,
+    httpOnly: false,
     secure: true,
+    // sameSite: "Lax",
+    // path: "/",
   };
-  return res.status(200).cookie("token", token, options).json({
+  return res.status(200).cookie("adminToken", adminToken, options).json({
     message: "Admin logedin successfully",
   });
 };
@@ -90,7 +94,6 @@ const accessAllUser = async (_, res) => {
     });
   }
   for (let i = 0; i < allUser.length; i++) {
-    console.log("Mubeen2", i);
     let contacts = await CrudModel.find({
       verifyUserId: allUser[i]._id,
     });
@@ -140,13 +143,30 @@ const deleteUser = async (req, res) => {
 };
 const logoutAdmin = async (_, res) => {
   const options = {
-    httpOnly: true,
-    secure: false,
+    httpOnly: false,
+    secure: true,
   };
-  return res.status(200).clearCookie("token", options).json({
+  return res.status(200).clearCookie("adminToken", options).json({
     message: "Logout Admin SuccessFully",
   });
 };
+
+// const verifyAdmin = async (req, res, next) => {
+//   const { token } = req.cookies;
+//   console.log(token);
+//   try {
+//     const decodedToken = jwt.verify(token, process.env.ADMIN_SEC_KEY);
+//     return res.status(200).json({
+//       meeesage: "Verified Successfully",
+//       success: true,
+//     });
+//   } catch (error) {
+//     return res.status(400).json({
+//       message: error.message,
+//       success: false,
+//     });
+//   }
+// };
 
 export {
   adminSignUp,
@@ -155,4 +175,5 @@ export {
   updateUser,
   deleteUser,
   logoutAdmin,
+  // verifyAdmin,
 };

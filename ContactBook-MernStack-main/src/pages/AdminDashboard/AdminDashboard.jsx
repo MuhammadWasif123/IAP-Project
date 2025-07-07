@@ -2,6 +2,7 @@ import { NavbarSimple } from "../../components/navbar/Navbar";
 import FooterSection from "../../components/footerSection/footerSection";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const AdminDashboard = () => {
   const [users, setUsers] = useState([]);
@@ -11,6 +12,29 @@ const AdminDashboard = () => {
   const [updatedEmail, setUpdatedEmail] = useState("");
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [userToDelete, setUserToDelete] = useState(null);
+  const navigate = useNavigate();
+  const LogoutHandler = async () => {
+    try {
+      const res = await axios.post(
+        "http://localhost:8000/api/admin/logout",
+        {},
+        {
+          withCredentials: true, //Required to send and receive cookies
+        }
+      );
+      if (res) {
+        navigate("/");
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+  const recentUsers = users.filter((user) => {
+    const created = new Date(user.createdAt);
+    const now = new Date();
+    const diffInDays = (now - created) / (1000 * 60 * 60 * 24);
+    return diffInDays <= 7; // users in last 7 days
+  });
 
   useEffect(() => {
     const fetchAllUsers = async () => {
@@ -42,59 +66,60 @@ const AdminDashboard = () => {
         </div>
         <nav className="mt-8 px-4">
           <div className="space-y-2">
-            <a
+            {/* <a
               href="#"
               className="flex items-center px-4 py-3 text-gray-300 hover:bg-gray-700 hover:text-white rounded-lg transition-colors group"
             >
               <i className="fas fa-home mr-3 text-cordes-accent group-hover:text-white" />
               Dashboard
-            </a>
-            <a
+            </a> */}
+            {/* <a
               href="#"
               className="flex items-center px-4 py-3 text-gray-300 hover:bg-gray-700 hover:text-white rounded-lg transition-colors group"
             >
-              <i className="fas fa-users mr-3 text-gray-400 group-hover:text-white" />
+              <i className="fas fa-users mr-3 text-gray-700 group-hover:text-white" />
               Users
-            </a>
-            <a
+            </a> */}
+            {/* <a
               href="#"
               className="flex items-center px-4 py-3 text-gray-300 hover:bg-gray-700 hover:text-white rounded-lg transition-colors group"
             >
               <i className="fas fa-chart-bar mr-3 text-gray-400 group-hover:text-white" />
               Analytics
-            </a>
-            <a
+            </a> */}
+            {/* <a
               href="#"
               className="flex items-center px-4 py-3 text-gray-300 hover:bg-gray-700 hover:text-white rounded-lg transition-colors group"
             >
               <i className="fas fa-shopping-cart mr-3 text-gray-400 group-hover:text-white" />
               Orders
-            </a>
-            <a
+            </a> */}
+            {/* <a
               href="#"
               className="flex items-center px-4 py-3 text-gray-300 hover:bg-gray-700 hover:text-white rounded-lg transition-colors group"
             >
               <i className="fas fa-box mr-3 text-gray-400 group-hover:text-white" />
               Products
-            </a>
-            <a
+            </a> */}
+            {/* <a
               href="#"
               className="flex items-center px-4 py-3 text-gray-300 hover:bg-gray-700 hover:text-white rounded-lg transition-colors group"
             >
               <i className="fas fa-cog mr-3 text-gray-400 group-hover:text-white" />
               Settings
-            </a>
+            </a> */}
             <a
+              onClick={LogoutHandler}
               href="#"
-              className="flex items-center px-4 py-3 text-gray-300 hover:bg-gray-700 hover:text-white rounded-lg transition-colors group"
+              className="flex items-center px-4 py-3 text-gray-700 hover:bg-[#8E24AA] hover:text-white rounded-lg transition-colors group"
             >
-              <i className="fas fa-cog mr-3 text-gray-400 group-hover:text-white" />
+              <i className="fas fa-cog mr-3 text-gray-700 group-hover:text-white" />
               Logout
             </a>
           </div>
         </nav>
         <div className="absolute bottom-4 left-4 right-4">
-          <div className="bg-gray-800 rounded-lg p-4">
+          <div className="bg-[#8E24AA] rounded-lg p-4">
             <div className="flex items-center space-x-3">
               <img
                 src="https://cdn-icons-png.flaticon.com/512/17003/17003310.png"
@@ -102,7 +127,7 @@ const AdminDashboard = () => {
                 className="w-10 h-10 rounded-full"
               />
               <div>
-                <p className="text-white text-sm font-medium">John Admin</p>
+                <p className="text-white text-sm font-medium">Wasif Khan</p>
                 <p className="text-gray-400 text-xs">Administrator</p>
               </div>
             </div>
@@ -117,30 +142,30 @@ const AdminDashboard = () => {
             <div className="flex items-center justify-between">
               <div>
                 <h1 className="text-2xl font-semibold text-gray-900">
-                  Dashboard Overview
+                  Contact Managment Admin
                 </h1>
                 <p className="text-gray-600 text-sm mt-1">
                   Welcome back, here's what's happening today
                 </p>
               </div>
-              <div className="flex items-center space-x-4">
-                <div className="relative">
+              {/* <div className="flex items-center space-x-4">
+                {/* <div className="relative">
                   <i className="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
                   <input
                     type="text"
                     placeholder="Search..."
                     className="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-cordes-accent focus:border-transparent outline-none"
                   />
-                </div>
-                <div className="relative">
-                  <button className="p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors">
-                    <i className="fas fa-bell text-xl" />
-                    <span className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 text-white text-xs rounded-full flex items-center justify-center">
-                      3
-                    </span>
-                  </button>
-                </div>
-              </div>
+                </div> */}
+              {/* <div className="relative">
+                <button className="p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors">
+                  <i className="fas fa-bell text-xl" />
+                  <span className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 text-white text-xs rounded-full flex items-center justify-center">
+                    3
+                  </span>
+                </button>
+              </div> */}
+              {/* </div> */}
             </div>
           </div>
         </header>
@@ -149,7 +174,7 @@ const AdminDashboard = () => {
           {/* Stats Cards */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
             {/* Revenue Card */}
-            <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow">
+            {/* <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow">
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-sm font-medium text-gray-600">
@@ -172,9 +197,9 @@ const AdminDashboard = () => {
                   <i className="fas fa-dollar-sign text-cordes-blue text-xl" />
                 </div>
               </div>
-            </div>
+            </div> */}
             {/* Users Card */}
-            <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow">
+            {/* <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow">
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-sm font-medium text-gray-600">
@@ -197,9 +222,9 @@ const AdminDashboard = () => {
                   <i className="fas fa-users text-green-600 text-xl" />
                 </div>
               </div>
-            </div>
+            </div> */}
             {/* Orders Card */}
-            <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow">
+            {/* <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow">
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-sm font-medium text-gray-600">
@@ -220,9 +245,9 @@ const AdminDashboard = () => {
                   <i className="fas fa-shopping-cart text-orange-600 text-xl" />
                 </div>
               </div>
-            </div>
+            </div> */}
             {/* Products Card */}
-            <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow">
+            {/* <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow">
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-sm font-medium text-gray-600">Products</p>
@@ -241,11 +266,11 @@ const AdminDashboard = () => {
                   <i className="fas fa-box text-purple-600 text-xl" />
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
           {/* Charts Row */}
           {/* Revenue Chart */}
-          <div className="grid grid-cols-1 lg:grid-cols-1 gap-6 mb-8 bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+          {/* <div className="grid grid-cols-1 lg:grid-cols-1 gap-6 mb-8 bg-white rounded-xl shadow-sm border border-gray-200 p-6">
             <div className="flex items-center justify-between mb-6">
               <div>
                 <h3 className="text-lg font-semibold text-gray-900">
@@ -266,171 +291,169 @@ const AdminDashboard = () => {
             </div>
 
             {/* User List */}
-            <div className="space-y-4 overflow-y-auto max-h-64">
-              {users.length > 0 ? (
-                users.map((user, index) => (
-                  <div
-                    key={user._id || index}
-                    className="flex items-center justify-between bg-gray-50 p-3 rounded-md border border-gray-200"
-                  >
-                    <div>
-                      <p className="text-gray-900 font-medium">
-                        {user.full_name}
-                      </p>
-                      <p className="text-gray-500 text-sm">{user.email}</p>
-                    </div>
-
-                    <div className="flex items-center space-x-2">
-                      <button
-                        onClick={() => {
-                          setIsModalOpen(true);
-                          setSelectedUser(user);
-                          setUpdatedName(user.full_name);
-                          setUpdatedEmail(user.email);
-                        }}
-                        className="px-3 py-1 text-sm bg-yellow-500 text-white rounded-md hover:bg-yellow-600"
-                      >
-                        Update
-                      </button>
-                      <button
-                        onClick={() => {
-                          setUserToDelete(user);
-                          setIsDeleteModalOpen(true);
-                        }}
-                        className="px-3 py-1 text-sm bg-red-500 text-white rounded-md hover:bg-red-600"
-                      >
-                        Delete
-                      </button>
-                    </div>
+          <div className="space-y-4 overflow-y-auto max-h-64">
+            {users.length > 0 ? (
+              users.map((user, index) => (
+                <div
+                  key={user._id || index}
+                  className="flex items-center justify-between bg-gray-50 p-3 rounded-md border border-gray-200"
+                >
+                  <div>
+                    <p className="text-gray-900 font-medium">
+                      {user.full_name}
+                    </p>
+                    <p className="text-gray-500 text-sm">{user.email}</p>
                   </div>
-                ))
-              ) : (
-                <p className="text-gray-500 text-sm">No users found.</p>
-              )}
-            </div>
 
-            {isModalOpen && (
-              <div className="fixed inset-0 bg-black bg-opacity-40 flex justify-center items-center z-50">
-                <div className="bg-white p-6 rounded-lg shadow-lg w-96 space-y-4">
-                  <h2 className="text-xl font-bold text-gray-800">
-                    Update User
-                  </h2>
-
-                  <input
-                    type="text"
-                    className="w-full border border-gray-300 rounded px-3 py-2"
-                    value={updatedName}
-                    onChange={(e) => setUpdatedName(e.target.value)}
-                  />
-
-                  <input
-                    type="email"
-                    className="w-full border border-gray-300 rounded px-3 py-2"
-                    value={updatedEmail}
-                    onChange={(e) => setUpdatedEmail(e.target.value)}
-                  />
-
-                  <div className="flex justify-end space-x-2">
+                  <div className="flex items-center space-x-2">
                     <button
-                      className="bg-gray-200 text-gray-700 px-4 py-2 rounded"
-                      onClick={() => setIsModalOpen(false)}
-                    >
-                      Cancel
-                    </button>
-                    <button
-                      className="bg-red-500 text-white px-4 py-2 rounded"
-                      onClick={async () => {
-                        try {
-                          const res = await axios.put(
-                            `http://localhost:8000/api/admin/update-user/${selectedUser._id}`,
-                            {
-                              full_name: updatedName,
-                              email: updatedEmail,
-                            },
-                            {
-                              withCredentials: true,
-                            }
-                          );
-                          console.log("User updated:", res.data);
-
-                          // Update local state
-                          setUsers((prev) =>
-                            prev.map((u) =>
-                              u._id === selectedUser._id
-                                ? {
-                                    ...u,
-                                    full_name: updatedName,
-                                    email: updatedEmail,
-                                  }
-                                : u
-                            )
-                          );
-
-                          setIsModalOpen(false);
-                        } catch (err) {
-                          console.error("Update failed:", err);
-                        }
-                      }}
-                    >
-                      Save
-                    </button>
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {isDeleteModalOpen && (
-              <div className="fixed inset-0 bg-black bg-opacity-40 flex justify-center items-center z-50">
-                <div className="bg-white p-6 rounded-lg shadow-lg w-96 space-y-4">
-                  <h2 className="text-xl font-semibold text-gray-800">
-                    Confirm Delete
-                  </h2>
-                  <p className="text-gray-600">
-                    Are you sure you want to delete user{" "}
-                    <span className="font-bold text-red-600">
-                      {userToDelete?.full_name}
-                    </span>
-                    ?
-                  </p>
-
-                  <div className="flex justify-end space-x-2">
-                    <button
-                      className="bg-gray-200 text-gray-700 px-4 py-2 rounded"
                       onClick={() => {
-                        setIsDeleteModalOpen(false);
-                        setUserToDelete(null);
+                        setIsModalOpen(true);
+                        setSelectedUser(user);
+                        setUpdatedName(user.full_name);
+                        setUpdatedEmail(user.email);
                       }}
+                      className="px-3 py-1 text-sm bg-[#8E24AA] text-white rounded-md hover:bg-[#d267f0]"
                     >
-                      Cancel
+                      Update
                     </button>
                     <button
-                      className="bg-red-600 text-white px-4 py-2 rounded"
-                      onClick={async () => {
-                        try {
-                          await axios.delete(
-                            `http://localhost:8000/api/admin/delete-user/${userToDelete._id}`,
-                            {
-                              withCredentials: true,
-                            }
-                          );
-
-                          // Reload the page to fetch updated users from the DB
-                          window.location.reload();
-                        } catch (err) {
-                          console.error("Delete failed:", err);
-                        }
+                      onClick={() => {
+                        setUserToDelete(user);
+                        setIsDeleteModalOpen(true);
                       }}
+                      className="px-3 py-1 text-sm bg-[#8E24AA] text-white rounded-md hover:bg-[#d267f0]"
                     >
-                      Yes, Delete
+                      Delete
                     </button>
                   </div>
                 </div>
-              </div>
+              ))
+            ) : (
+              <p className="text-gray-500 text-sm">No users found.</p>
             )}
           </div>
 
+          {isModalOpen && (
+            <div className="fixed inset-0 bg-black bg-opacity-40 flex justify-center items-center z-50">
+              <div className="bg-white p-6 rounded-lg shadow-lg w-96 space-y-4">
+                <h2 className="text-xl font-bold text-gray-800">Update User</h2>
+
+                <input
+                  type="text"
+                  className="w-full border border-gray-300 rounded px-3 py-2"
+                  value={updatedName}
+                  onChange={(e) => setUpdatedName(e.target.value)}
+                />
+
+                <input
+                  type="email"
+                  className="w-full border border-gray-300 rounded px-3 py-2"
+                  value={updatedEmail}
+                  onChange={(e) => setUpdatedEmail(e.target.value)}
+                />
+
+                <div className="flex justify-end space-x-2">
+                  <button
+                    className="bg-gray-200 text-gray-700 px-4 py-2 rounded"
+                    onClick={() => setIsModalOpen(false)}
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    className="bg-red-500 text-white px-4 py-2 rounded"
+                    onClick={async () => {
+                      try {
+                        const res = await axios.put(
+                          `http://localhost:8000/api/admin/update-user/${selectedUser._id}`,
+                          {
+                            full_name: updatedName,
+                            email: updatedEmail,
+                          },
+                          {
+                            withCredentials: true,
+                          }
+                        );
+                        console.log("User updated:", res.data);
+
+                        // Update local state
+                        setUsers((prev) =>
+                          prev.map((u) =>
+                            u._id === selectedUser._id
+                              ? {
+                                  ...u,
+                                  full_name: updatedName,
+                                  email: updatedEmail,
+                                }
+                              : u
+                          )
+                        );
+
+                        setIsModalOpen(false);
+                      } catch (err) {
+                        console.error("Update failed:", err);
+                      }
+                    }}
+                  >
+                    Save
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {isDeleteModalOpen && (
+            <div className="fixed inset-0 bg-black bg-opacity-40 flex justify-center items-center z-50">
+              <div className="bg-white p-6 rounded-lg shadow-lg w-96 space-y-4">
+                <h2 className="text-xl font-semibold text-gray-800">
+                  Confirm Delete
+                </h2>
+                <p className="text-gray-600">
+                  Are you sure you want to delete user{" "}
+                  <span className="font-bold text-red-600">
+                    {userToDelete?.full_name}
+                  </span>
+                  ?
+                </p>
+
+                <div className="flex justify-end space-x-2">
+                  <button
+                    className="bg-gray-200 text-gray-700 px-4 py-2 rounded"
+                    onClick={() => {
+                      setIsDeleteModalOpen(false);
+                      setUserToDelete(null);
+                    }}
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    className="bg-red-600 text-white px-4 py-2 rounded"
+                    onClick={async () => {
+                      try {
+                        await axios.delete(
+                          `http://localhost:8000/api/admin/delete-user/${userToDelete._id}`,
+                          {
+                            withCredentials: true,
+                          }
+                        );
+
+                        // Reload the page to fetch updated users from the DB
+                        window.location.reload();
+                      } catch (err) {
+                        console.error("Delete failed:", err);
+                      }
+                    }}
+                  >
+                    Yes, Delete
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+          {/* </div>  */}
+
           {/* Recent Orders Table */}
-          <div className="bg-white rounded-xl shadow-sm border border-gray-200 mb-8">
+          {/* <div className="bg-white rounded-xl shadow-sm border border-gray-200 mb-8">
             <div className="px-6 py-4 border-b border-gray-200">
               <div className="flex items-center justify-between">
                 <div>
@@ -637,11 +660,11 @@ const AdminDashboard = () => {
                 </tbody>
               </table>
             </div>
-          </div>
+          </div> */}
           {/* Bottom Row */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Recent Activity */}
-            <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+            {/* <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
               <h3 className="text-lg font-semibold text-gray-900 mb-4">
                 Recent Activity
               </h3>
@@ -683,9 +706,9 @@ const AdminDashboard = () => {
                   </div>
                 </div>
               </div>
-            </div>
+            </div> */}
             {/* System Status */}
-            <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+            {/* <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
               <h3 className="text-lg font-semibold text-gray-900 mb-4">
                 System Status
               </h3>
@@ -730,9 +753,65 @@ const AdminDashboard = () => {
                   </div>
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
         </main>
+        {/* Dashboard Summary Cards */}
+        <div className="px-6 py-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6">
+          {/* Total Users */}
+          <div className="bg-white shadow-lg border rounded-lg p-5 ">
+            <div className="flex items-center space-x-4">
+              <div className="bg-blue-100 text-blue-600 rounded-full p-3">
+                <i className="fas fa-users text-xl" />
+              </div>
+              <div>
+                <h3 className="text-lg font-semibold text-gray-700">
+                  Total Users
+                </h3>
+                <p className="text-2xl font-bold text-gray-900">
+                  {users.length}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* New Users (Last 7 Days) */}
+          <div className="bg-white shadow-lg border rounded-lg p-5">
+            <div className="flex items-center space-x-4">
+              <div className="bg-green-100 text-green-600 rounded-full p-3">
+                <i className="fas fa-user-plus text-xl" />
+              </div>
+              <div>
+                <h3 className="text-lg font-semibold text-gray-700">
+                  New Users (7d)
+                </h3>
+                <p className="text-2xl font-bold text-gray-900">
+                  {recentUsers.length}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Admin Actions */}
+          {/* <div className="bg-white shadow rounded-lg p-5">
+            <div className="flex items-center space-x-4">
+              <div className="bg-yellow-100 text-yellow-600 rounded-full p-3">
+                <i className="fas fa-user-shield text-xl" />
+              </div>
+              <div>
+                <h3 className="text-lg font-semibold text-gray-700">
+                  Admin Tools
+                </h3>
+                <button
+                  onClick={LogoutHandler}
+                  className="mt-1 text-sm text-red-600 hover:underline"
+                >
+                  Logout
+                </button>
+              </div>
+            </div>
+          </div> */}
+        </div>
       </div>
     </>
   );

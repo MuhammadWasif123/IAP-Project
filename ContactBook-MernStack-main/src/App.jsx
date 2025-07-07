@@ -11,7 +11,7 @@ import TeamMember from "./pages/TeamMember/TeamMember.jsx";
 import ContactUs from "./pages/ContactUs/ContactUs.jsx";
 import AdminLogin from "./pages/AdminLogin/AdminLogin.jsx";
 import AdminDashboard from "./pages/AdminDashboard/AdminDashboard.jsx";
-
+import ProtectedAdmin from "../routes/ProtectedAdmin.jsx";
 function App() {
   return (
     <>
@@ -23,7 +23,6 @@ function App() {
 
         <Route element={<AuthenticateRoute />}>
           <Route path="/login" element={<Login />} />
-          <Route path="/admin-login" element={<AdminLogin />} />
           <Route path="/register" element={<Register />} />
         </Route>
 
@@ -31,7 +30,15 @@ function App() {
           <Route path="/dashboard" element={<DashboardContact />} />
         </Route>
 
-        <Route path="/admin-dashboard" element={<AdminDashboard />} />
+        <Route
+          path="/admin-dashboard"
+          element={
+            <ProtectedAdmin>
+              <AdminDashboard />
+            </ProtectedAdmin>
+          }
+        />
+        <Route path="/admin-login" element={<AdminLogin />} />
       </Routes>
     </>
   );

@@ -21,6 +21,7 @@ import {
   loginAdmin,
   logoutAdmin,
   updateUser,
+  // verifyAdmin,
 } from "../controller/admin/admin.controllor.js";
 
 const router = express.Router();
@@ -35,7 +36,7 @@ router.get("/api/admin/all-users", accessAllUser);
 router.put("/api/admin/update-user/:id", updateUser);
 router.delete("/api/admin/delete-user/:id", deleteUser);
 router.post("/api/admin/logout", logoutAdmin);
-
+// router.post("/api/admin/verify", verifyAdmin);
 router.get("/api/dashboardvalidate", authMiddelwear, dashboardValidate);
 router.post("/api/post", [authMiddelwear, upload.any("image")], postController);
 router.get("/api/allpost", authMiddelwear, allPostController);
