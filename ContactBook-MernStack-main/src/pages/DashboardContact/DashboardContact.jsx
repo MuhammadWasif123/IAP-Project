@@ -14,6 +14,7 @@ import { NavbarSimple } from "../../components/navbar/Navbar";
 import { Card } from "@material-tailwind/react";
 import { Avatar } from "@material-tailwind/react";
 import FooterSection from "../../components/footerSection/footerSection";
+import Cookies from "js-cookie";
 
 const TABLE_HEAD = [
   "profile",
@@ -68,11 +69,12 @@ const DashboardContact = () => {
   const [serchLoading, setSerchLoading] = useState(false);
   const [filteredData, setFilteredData] = useState([]);
 
-  const handleSearch = async() => {
+  const handleSearch = async () => {
     setSerchLoading(true);
-    const token = localStorage.getItem("token")
+    const token = Cookie.getItem("token");
     try {
-      const response = await axios.get(`http://localhost:8000/api/search-posts?search=${searchQuery}`,
+      const response = await axios.get(
+        `http://localhost:8000/api/search-posts?search=${searchQuery}`,
         {
           headers: {
             authorization: `Bearer ${token}`,
@@ -80,17 +82,17 @@ const DashboardContact = () => {
           },
         }
       );
-      console.log("filter==>",response.data)
+      console.log("filter==>", response.data);
       setFilteredData(response.data.data); // Assuming the backend returns `data` in the response
       setSerchLoading(false);
     } catch (err) {
       // setError('Something went wrong while searching.');
-      console.log("error",err.message)
+      console.log("error", err.message);
     } finally {
       setLoading(false);
     }
 
-   //frontend filter 
+    //frontend filter
     // const filtered = allData.filter(
     //   (item) =>
     //     item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -164,17 +166,19 @@ const DashboardContact = () => {
 
   const fileHandler = (e) => {
     setImageFile(e.target.files[0]);
+    console.log(e.target.files[0]);
   };
 
   const dashboardValid = async () => {
-    const token = localStorage.getItem("token");
+    const token = Cookies.get("userToken");
     if (!token) {
-      console.error("Token not found in localStorage");
+      console.error("Token not found ");
       return;
     }
     try {
       const res = await axios.get(
         "http://localhost:8000/api/dashboardvalidate",
+        { withCredentials: true },
         {
           headers: {
             authorization: `Bearer ${token}`,
@@ -202,15 +206,18 @@ const DashboardContact = () => {
     formData.append("contact", contact);
     formData.append("imageFile", imageFile);
 
-    const token = localStorage.getItem("token");
+    const token = Cookies.get("userToken");
     if (!token) {
-      console.error("Token not found in localStorage");
+      console.error("Token not found ");
     }
     try {
       setLoading(true);
       const res = await axios.post(
         "http://localhost:8000/api/post",
         formData,
+        {
+          withCredentials: true,
+        },
         {
           headers: {
             authorization: `Bearer ${token}`,
@@ -232,14 +239,17 @@ const DashboardContact = () => {
   };
   // ALLPOST
   const allPostHandler = async () => {
-    const token = localStorage.getItem("token");
+    const token = Cookies.get("userToken");
     if (!token) {
-      console.error("Token not found in localStorage");
+      console.error("Token not found ");
       return;
     }
     try {
       const res = await axios.get(
         "http://localhost:8000/api/allpost",
+        {
+          withCredentials: true,
+        },
         {
           headers: {
             authorization: `Bearer ${token}`,
@@ -260,7 +270,7 @@ const DashboardContact = () => {
 
   // DELPOST
   const delPostHandler = async (id) => {
-    const token = localStorage.getItem("token");
+    const token = Cookies.get("userToken");
     if (!token) {
       console.log("Token not found in local storage");
       // console.log(id);
@@ -410,7 +420,6 @@ const DashboardContact = () => {
           >
             {serchLoading ? "Searching..." : "Search"}
           </button>
-
         </div>
 
         <div>
@@ -660,7 +669,7 @@ const DashboardContact = () => {
           </Card>
         </div>
       </div>
-      <FooterSection/>
+      <FooterSection />
     </>
   );
 };

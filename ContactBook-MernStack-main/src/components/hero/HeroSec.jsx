@@ -1,6 +1,7 @@
 import React from "react";
 import Buttonseemore from "../button/Buttonseemore";
 import { Link } from "react-router-dom";
+import Cookies from "js-cookie";
 
 const HeroSec = () => {
   return (
@@ -39,7 +40,7 @@ const HeroSec = () => {
           always at your fingertips
         </p>
         <div className="flex flex-col mb-8 lg:mb-6 space-y-4 sm:flex-row sm:justify-center sm:space-y-0 sm:space-x-4">
-          {localStorage.getItem("token") ? (
+          {Cookies.get("userToken") ? (
             <Link
               to="/dashboard"
               className="inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center  rounded-lg border border-[#8E24AA] hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 text-purple-600 dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800"
