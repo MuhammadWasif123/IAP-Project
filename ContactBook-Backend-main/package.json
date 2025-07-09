@@ -1,6 +1,7 @@
 {
   "type": "module",
   "dependencies": {
+    "@vendia/serverless-express": "^4.12.6",
     "bcrypt": "^6.0.0",
     "cloudinary": "^2.0.0",
     "cookie-parser": "^1.4.7",
@@ -16,12 +17,12 @@
   },
   "name": "contactbookbackend",
   "version": "1.0.0",
-  "main": "app.js",
+  "main": "server.js",
   "scripts": {
     "install-prod-dependencies": "npm install --only=prod",
     "install-dev-and-prod-dependencies": "npm install --omit=dev",
-    "start": "node app.js",
-    "dev": "nodemon app.js"
+    "start": "node server.js",
+    "dev": "nodemon server.js"
   },
   "keywords": [],
   "author": "",
