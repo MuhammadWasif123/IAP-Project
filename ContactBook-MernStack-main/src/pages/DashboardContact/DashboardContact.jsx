@@ -56,13 +56,6 @@ const DashboardContact = () => {
   const [updateContact, setUpdateContact] = useState("");
   const [updateId, setUpdateId] = useState("");
   const [updateLoading, setUpdateLoading] = useState(false);
-  // console.log(updateName);
-  // console.log(updateEmail);
-  // console.log(updateContact);
-  // console.log(updateId);
-  //close update modal
-  // const [updateModal, setUpdateModal] = useState(false)
-
   //search state
   const [searchQuery, setSearchQuery] = useState("");
   const [searchQueryLength, setSearchQueryLength] = useState(0);
@@ -71,7 +64,7 @@ const DashboardContact = () => {
 
   const handleSearch = async () => {
     setSerchLoading(true);
-    const token = Cookie.getItem("token");
+    const token = Cookies.get("userToken")
     try {
       const response = await axios.get(
         `http://localhost:8000/api/search-posts?search=${searchQuery}`,
@@ -91,17 +84,6 @@ const DashboardContact = () => {
     } finally {
       setLoading(false);
     }
-
-    //frontend filter
-    // const filtered = allData.filter(
-    //   (item) =>
-    //     item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    //     item.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    //     item.contact.toLowerCase().includes(searchQuery.toLowerCase())
-    // );
-    // console.log("filter==>", filtered);
-    // setFilteredData(filtered);
-    // setSerchLoading(false);
   };
 
   // Clear filtered data if searchQuery is empty
